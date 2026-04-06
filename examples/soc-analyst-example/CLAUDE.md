@@ -1,4 +1,4 @@
-# CLAUDE.md — Sarah Chen's InfoSec Personal OS
+# CLAUDE.md — Sarah Chen's ContextOS
 
 > This file is auto-loaded by Claude Code every session.
 

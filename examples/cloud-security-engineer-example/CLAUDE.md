@@ -1,4 +1,4 @@
-# CLAUDE.md — Marcus Rivera's InfoSec Personal OS
+# CLAUDE.md — Marcus Rivera's ContextOS
 
 > This file is auto-loaded by Claude Code every session.
 

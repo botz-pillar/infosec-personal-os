@@ -1,4 +1,4 @@
-# InfoSec Personal OS
+# ContextOS
 
 > A personal AI operating system for InfoSec teams. Clone it, run setup, start working with Claude Code in 10 minutes.
 
@@ -6,7 +6,7 @@
 
 Security practitioners are drowning in context-switching. You jump between SIEM queries, vulnerability reports, compliance artifacts, cloud consoles, and ticket queues — and every time you reach for an AI tool, you start from zero. You re-explain your role, your tools, your environment, your frameworks. Every. Single. Time.
 
-**InfoSec Personal OS solves this.** It gives Claude Code persistent knowledge of who you are, what you work on, and how your team operates — so you get useful output from the first prompt of every session.
+**ContextOS solves this.** It gives Claude Code persistent knowledge of who you are, what you work on, and how your team operates — so you get useful output from the first prompt of every session.
 
 ### What it does for you personally:
 - **No more re-explaining yourself.** Claude knows your role, your tools, your access levels, your current projects, and how you like to work.
@@ -26,7 +26,7 @@ Security practitioners are drowning in context-switching. You jump between SIEM 
 
 ## What Is This?
 
-InfoSec Personal OS is a **context-first AI assistant system** built for security teams. It gives every team member:
+ContextOS is a **context-first AI assistant system** built for security teams. It gives every team member:
 
 - **Personalized AI context** — Claude Code knows your role, tools, projects, and goals
 - **Shared team knowledge** — compliance frameworks, tool inventory, approved prompts, guardrails
@@ -58,8 +58,8 @@ InfoSec Personal OS is a **context-first AI assistant system** built for securit
 
 | Repo | What It Is | Who Updates It |
 |------|-----------|----------------|
-| [infosec-personal-os](https://github.com/botz-pillar/infosec-personal-os) (this repo) | Template for your personal AI context | You (your copy) |
-| [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) | Team knowledge base, workflows, prompts | Team via PRs |
+| [contextOS-personal](https://github.com/botz-pillar/contextOS-personal) (this repo) | Template for your personal AI context | You (your copy) |
+| [contextOS-team](https://github.com/botz-pillar/contextOS-team) | Team knowledge base, workflows, prompts | Team via PRs |
 
 The shared context is included as a **git submodule**. It shows up as a regular `shared-context/` folder. Claude Code reads it seamlessly — no special config needed.
 
@@ -70,25 +70,23 @@ The shared context is included as a **git submodule**. It shows up as a regular 
 ### 1. Clone the repo (with shared context)
 
 ```bash
-git clone --recurse-submodules https://github.com/botz-pillar/infosec-personal-os.git ~/infosec-os
-cd ~/infosec-os
+git clone --recurse-submodules https://github.com/botz-pillar/contextOS-personal.git ~/context-os
+cd ~/context-os
 ```
 
-### 2. Run the setup script
-
-```bash
-python3 setup.py
-```
-
-The script initializes shared context automatically, then asks you about your role, tools, and goals. It generates your personalized `CLAUDE.md` and `my-context.md`.
-
-### 3. Start using Claude Code
+### 2. Launch Claude Code
 
 ```bash
 claude
 ```
 
-Claude Code auto-loads your `CLAUDE.md` and knows who you are, what you work on, and how to help. Shared team knowledge is available at `shared-context/`.
+That's it. Claude detects this is your first run, welcomes you, and walks you through a guided setup — asking about your role, tools, projects, and working style via reverse prompting. No scripts to run. Just a conversation.
+
+### 3. Start working
+
+After setup, Claude knows who you are, what you work on, and how to help. Every future session picks up right where your context left off.
+
+**To update shared team context anytime:** `git submodule update --remote`
 
 ---
 
@@ -145,12 +143,26 @@ When someone on the team PRs an update to the shared repo (new workflow, updated
 
 ---
 
-## Team Onboarding Checklist
+## Team Setup (Team Lead)
 
-- [ ] Clone: `git clone --recurse-submodules https://github.com/botz-pillar/infosec-personal-os.git ~/infosec-os`
-- [ ] Run: `cd ~/infosec-os && python3 setup.py`
-- [ ] Review your generated `CLAUDE.md` — edit anything that's off
-- [ ] Test: run `claude` and ask it to summarize your role
+Before rolling out to the team, the team lead should customize the shared context:
+
+```bash
+git clone https://github.com/botz-pillar/contextOS-team.git
+cd contextOS-team
+claude
+```
+
+Claude detects the uncustomized team context and walks you through setup — team structure, tools, compliance frameworks, SLAs, and guardrails. After setup, commit and push. Your team members get the customized context automatically.
+
+---
+
+## Team Member Onboarding Checklist
+
+- [ ] Clone: `git clone --recurse-submodules https://github.com/YOUR-ORG/contextOS-personal.git ~/context-os`
+- [ ] Run: `cd ~/context-os && claude`
+- [ ] Answer Claude's setup questions (takes ~10 minutes)
+- [ ] Review your generated context — edit `CLAUDE.md` or `my-context.md` if anything's off
 - [ ] Try a workflow: ask Claude to load `shared-context/workflows/cloud-security-scan.md`
 - [ ] Read `docs/collaboration-guide.md` for contributing back
 

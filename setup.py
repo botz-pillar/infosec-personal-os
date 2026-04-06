@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-InfoSec Personal OS — Interactive Setup Script
+ContextOS — Interactive Setup Script
 
 Asks guided questions about your role, tools, projects, and goals,
 then generates personalized CLAUDE.md and my-context.md files.
@@ -27,7 +27,7 @@ class C:
 def banner():
     print(f"""
 {C.CYAN}{C.BOLD}╔══════════════════════════════════════════════════════════╗
-║           InfoSec Personal OS — Setup                    ║
+║           ContextOS — Personal Setup                    ║
 ║     Personalize your AI-powered security workflow        ║
 ╚══════════════════════════════════════════════════════════╝{C.RESET}
 """)
@@ -321,7 +321,7 @@ def generate_claude_md(d):
     if d["quarterly_learning"] and d["quarterly_learning"] != "TBD":
         learning += f"\n- This quarter: {d['quarterly_learning']}"
 
-    return f"""# CLAUDE.md — {d['name']}'s InfoSec Personal OS
+    return f"""# CLAUDE.md — {d['name']}'s ContextOS
 
 > This file is auto-loaded by Claude Code every session.
 

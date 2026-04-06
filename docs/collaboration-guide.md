@@ -8,11 +8,11 @@
 
 | Content | Repo | Who Updates |
 |---------|------|-------------|
-| Your personal context (`CLAUDE.md`, `my-context.md`) | Your copy of `infosec-personal-os` | You alone |
-| Shared team knowledge, workflows, prompts | [`infosec-shared-context`](https://github.com/botz-pillar/infosec-shared-context) | Team via PRs |
-| Examples and documentation | `infosec-personal-os` (template repo) | Repo maintainer |
+| Your personal context (`CLAUDE.md`, `my-context.md`) | Your copy of `contextOS-personal` | You alone |
+| Shared team knowledge, workflows, prompts | [`contextOS-team`](https://github.com/botz-pillar/contextOS-team) | Team via PRs |
+| Examples and documentation | `contextOS-personal` (template repo) | Repo maintainer |
 
-**Your personal files** live in your local copy of infosec-personal-os (gitignored from the template).
+**Your personal files** live in your local copy of contextOS-personal (gitignored from the template).
 **Shared knowledge** lives in a separate repo and is pulled in via git submodule at `shared-context/`.
 
 ---
@@ -34,8 +34,8 @@ Contributions go to the **shared context repo**, not your personal OS.
 
 1. **Clone the shared context repo directly:**
 ```bash
-git clone https://github.com/botz-pillar/infosec-shared-context.git
-cd infosec-shared-context
+git clone https://github.com/botz-pillar/contextOS-team.git
+cd contextOS-team
 ```
 
 2. **Create a branch and make changes:**
@@ -162,7 +162,7 @@ Each shared file should have a maintainer:
 | `security-guardrails.md` | Security Lead | Quarterly + post-incident |
 | `workflows/*` | Original author | Quarterly |
 
-*All of these live in the [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) repo.*
+*All of these live in the [contextOS-team](https://github.com/botz-pillar/contextOS-team) repo.*
 
 ### Deprecating Content
 
@@ -241,7 +241,7 @@ A: You can for personal experimentation, but changes won't persist — the next 
 A: Open an issue or discuss in Slack. The team decides shared content collaboratively.
 
 **Q: How do I know when shared content has been updated?**
-A: Watch the [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) repo for notifications, or run `git submodule update --remote` regularly.
+A: Watch the [contextOS-team](https://github.com/botz-pillar/contextOS-team) repo for notifications, or run `git submodule update --remote` regularly.
 
 **Q: Can I add my own workflows without PRing them?**
 A: Yes — put them in a `my-workflows/` folder in your personal OS. Only PR to shared context if they'd benefit others.

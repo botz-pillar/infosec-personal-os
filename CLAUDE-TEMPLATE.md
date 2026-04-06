@@ -1,4 +1,4 @@
-# CLAUDE.md — {{NAME}}'s InfoSec Personal OS
+# CLAUDE.md — {{NAME}}'s ContextOS
 
 > This file is auto-loaded by Claude Code every session. It tells Claude who you are, what you work on, and how to help you.
 
