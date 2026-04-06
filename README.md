@@ -2,6 +2,28 @@
 
 > A personal AI operating system for InfoSec teams. Clone it, run setup, start working with Claude Code in 10 minutes.
 
+## Why This Exists
+
+Security practitioners are drowning in context-switching. You jump between SIEM queries, vulnerability reports, compliance artifacts, cloud consoles, and ticket queues — and every time you reach for an AI tool, you start from zero. You re-explain your role, your tools, your environment, your frameworks. Every. Single. Time.
+
+**InfoSec Personal OS solves this.** It gives Claude Code persistent knowledge of who you are, what you work on, and how your team operates — so you get useful output from the first prompt of every session.
+
+### What it does for you personally:
+- **No more re-explaining yourself.** Claude knows your role, your tools, your access levels, your current projects, and how you like to work.
+- **Vetted prompts for real security work.** Stop writing prompts from scratch for CVE triage, SIEM queries, compliance evidence, and cloud scanning. Use the team's battle-tested prompt library.
+- **Workflows that match your actual job.** Step-by-step procedures for the tasks you do weekly — not generic AI demos, but real SOC triage, real vuln management, real FedRAMP ConMon.
+
+### What it does for your team:
+- **Shared knowledge base that stays in sync.** Compliance frameworks, tool inventory, security guardrails, and approved prompts — maintained once, available to everyone.
+- **Institutional knowledge that doesn't walk out the door.** When a senior analyst leaves, their workflows and prompt patterns stay.
+- **Consistent quality across the team.** Junior analysts get the same prompt templates and guardrails as senior engineers.
+
+### What it takes:
+- **10 minutes to set up.** Clone, run the setup script, answer some questions. Done.
+- **Zero maintenance burden.** Shared context updates with one command. Personal context is just markdown you edit when things change.
+
+---
+
 ## What Is This?
 
 InfoSec Personal OS is a **context-first AI assistant system** built for security teams. It gives every team member:
@@ -10,8 +32,6 @@ InfoSec Personal OS is a **context-first AI assistant system** built for securit
 - **Shared team knowledge** — compliance frameworks, tool inventory, approved prompts, guardrails
 - **Ready-to-use workflows** — cloud scanning, vuln management, compliance reporting, SOC triage
 - **Always in sync** — shared context updates automatically across the whole team
-
-Think of it as your team's collective security brain, personalized to each individual.
 
 ---
 
