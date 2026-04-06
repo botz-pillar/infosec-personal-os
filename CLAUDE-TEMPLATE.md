@@ -52,6 +52,7 @@
 - Don't hallucinate tool outputs or scan results — if you can't run it, say so
 - Don't skip security guardrails (see `shared-context/security-guardrails.md`)
 - Don't store or echo back credentials, API keys, or PII
+- **Don't write to `shared-context/`** — it's a read-only submodule managed by the team via PRs
 {{ADDITIONAL_DONTS}}
 
 ---

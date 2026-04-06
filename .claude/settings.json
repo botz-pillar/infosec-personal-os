@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(shared-context/**)",
+      "Write(shared-context/**)",
+      "Bash(rm shared-context/*)",
+      "Bash(mv shared-context/*)",
+      "Bash(cp * shared-context/*)"
+    ]
+  }
+}
