@@ -99,10 +99,10 @@ These shape how Claude interacts with you. Examples:
 
 If the shared workflows don't cover your use case, create your own:
 
-1. Create a new file in `workflows/` (e.g., `workflows/my-siem-queries.md`)
+1. Create a new file in `my-workflows/` (e.g., `my-workflows/siem-queries.md`)
 2. Follow the same structure as existing workflows
 3. Reference it in your `CLAUDE.md` context loading table
-4. If it's useful for others, PR it to `main`
+4. If it's useful for others, PR it to the [shared context repo](https://github.com/botz-pillar/infosec-shared-context)
 
 ---
 

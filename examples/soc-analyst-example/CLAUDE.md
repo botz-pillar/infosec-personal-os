@@ -99,9 +99,9 @@
 ### Workflows (load when doing the work)
 | Workflow | When to Use |
 |----------|-------------|
-| `workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
-| `workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
-| `workflows/cloud-security-scan.md` | Reviewing cloud security findings |
+| `shared-context/workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
+| `shared-context/workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
+| `shared-context/workflows/cloud-security-scan.md` | Reviewing cloud security findings |
 
 ---
 

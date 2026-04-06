@@ -9,19 +9,49 @@ InfoSec Personal OS is a **context-first AI assistant system** built for securit
 - **Personalized AI context** — Claude Code knows your role, tools, projects, and goals
 - **Shared team knowledge** — compliance frameworks, tool inventory, approved prompts, guardrails
 - **Ready-to-use workflows** — cloud scanning, vuln management, compliance reporting, SOC triage
-- **Version-controlled collaboration** — update shared knowledge via PRs, keep personal context private
+- **Always in sync** — shared context updates automatically across the whole team
 
 Think of it as your team's collective security brain, personalized to each individual.
 
 ---
 
+## Architecture: Two Repos, One Experience
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  YOUR Personal OS (this repo)                           │
+│                                                         │
+│  CLAUDE.md          ← auto-loaded every session         │
+│  my-context.md      ← your role, tools, goals           │
+│                                                         │
+│  shared-context/    ← git submodule (auto-synced)       │
+│  ┌─────────────────────────────────────────────────┐    │
+│  │  Team Shared Context (separate repo)            │    │
+│  │  team-overview.md, compliance-frameworks.md,    │    │
+│  │  tools, prompts, guardrails, workflows          │    │
+│  └─────────────────────────────────────────────────┘    │
+│                                                         │
+│  examples/          ← sample completed setups           │
+│  docs/              ← guides                            │
+└─────────────────────────────────────────────────────────┘
+```
+
+| Repo | What It Is | Who Updates It |
+|------|-----------|----------------|
+| [infosec-personal-os](https://github.com/botz-pillar/infosec-personal-os) (this repo) | Template for your personal AI context | You (your copy) |
+| [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) | Team knowledge base, workflows, prompts | Team via PRs |
+
+The shared context is included as a **git submodule**. It shows up as a regular `shared-context/` folder. Claude Code reads it seamlessly — no special config needed.
+
+---
+
 ## Quick Start (10 Minutes)
 
-### 1. Clone the repo
+### 1. Clone the repo (with shared context)
 
 ```bash
-git clone https://github.com/your-org/infosec-personal-os.git
-cd infosec-personal-os
+git clone --recurse-submodules https://github.com/botz-pillar/infosec-personal-os.git ~/infosec-os
+cd ~/infosec-os
 ```
 
 ### 2. Run the setup script
@@ -30,7 +60,7 @@ cd infosec-personal-os
 python3 setup.py
 ```
 
-The script asks you questions about your role, tools, and goals, then generates your personalized `CLAUDE.md` and context files.
+The script initializes shared context automatically, then asks you about your role, tools, and goals. It generates your personalized `CLAUDE.md` and `my-context.md`.
 
 ### 3. Start using Claude Code
 
@@ -38,38 +68,35 @@ The script asks you questions about your role, tools, and goals, then generates 
 claude
 ```
 
-Claude Code auto-loads your `CLAUDE.md` and knows who you are, what you work on, and how to help.
+Claude Code auto-loads your `CLAUDE.md` and knows who you are, what you work on, and how to help. Shared team knowledge is available at `shared-context/`.
 
 ---
 
 ## What Gets Generated
 
-After setup, your repo looks like this:
+After setup, your directory looks like this:
 
 ```
-infosec-personal-os/
-├── CLAUDE.md                    # YOUR personalized AI context (auto-generated)
-├── my-context.md                # Your role, tools, projects, goals
-├── shared-context/              # Team knowledge (shared across everyone)
-│   ├── team-overview.md         # Team structure and responsibilities
-│   ├── compliance-frameworks.md # FedRAMP, CMMC, CIS, NIST references
-│   ├── tools-and-integrations.md# Tool inventory and MCP server docs
-│   ├── approved-prompts.md      # Vetted prompt library for common tasks
-│   └── security-guardrails.md   # What Claude should/shouldn't do
-├── workflows/                   # Step-by-step procedures
-│   ├── cloud-security-scan.md
-│   ├── vulnerability-analysis.md
-│   ├── compliance-reporting.md
-│   ├── soc-ticket-triage.md
-│   └── risk-assessment.md
-├── examples/                    # Sample completed setups
+~/infosec-os/
+├── CLAUDE.md                          # YOUR personalized AI context
+├── my-context.md                      # Your role, tools, projects, goals
+├── shared-context/                    # Team knowledge (git submodule)
+│   ├── team-overview.md               #   Team structure and responsibilities
+│   ├── compliance-frameworks.md       #   FedRAMP, CMMC, CIS, NIST references
+│   ├── tools-and-integrations.md      #   Tool inventory and MCP server docs
+│   ├── approved-prompts.md            #   Vetted prompt library for common tasks
+│   ├── security-guardrails.md         #   What Claude should/shouldn't do
+│   └── workflows/                     #   Step-by-step procedures
+│       ├── cloud-security-scan.md
+│       ├── vulnerability-analysis.md
+│       ├── compliance-reporting.md
+│       ├── soc-ticket-triage.md
+│       └── risk-assessment.md
+├── examples/                          # Sample completed setups
 │   ├── soc-analyst-example/
 │   ├── cloud-security-engineer-example/
 │   └── compliance-manager-example/
-└── docs/                        # Detailed guides
-    ├── setup-guide.md
-    ├── customization-guide.md
-    └── collaboration-guide.md
+└── docs/                              # Detailed guides
 ```
 
 ---
@@ -77,39 +104,34 @@ infosec-personal-os/
 ## How It Works
 
 ### Layer 1: Personal Context (yours alone)
-Your `CLAUDE.md` and `my-context.md` contain your role, responsibilities, current projects, and preferences. Claude Code loads this automatically every session.
+Your `CLAUDE.md` and `my-context.md` contain your role, responsibilities, current projects, and preferences. Claude Code loads `CLAUDE.md` automatically every session.
 
-### Layer 2: Shared Team Knowledge (everyone shares)
-The `shared-context/` folder contains team-wide knowledge: architecture, tools, compliance frameworks, approved prompts, and security guardrails. Everyone references the same files.
+### Layer 2: Shared Team Knowledge (synced across everyone)
+The `shared-context/` folder is a git submodule pointing to the team's shared repo. It contains architecture, tools, compliance frameworks, approved prompts, and security guardrails. One `git submodule update --remote` pulls the latest from the team.
 
 ### Layer 3: Workflows (reusable procedures)
-The `workflows/` folder contains step-by-step instructions for common tasks. Load them when doing the relevant work. They reference both your personal context and shared team knowledge.
+Workflows live inside `shared-context/workflows/`. Load them when doing the relevant work. They reference both your personal context and shared team knowledge.
 
 ---
 
-## Branching Strategy
+## Keeping Shared Context Updated
 
-```
-main              ← Shared team knowledge (PRs only)
-├── personal/NAME ← Your personal context (your branch)
-└── feature/X     ← New workflows or shared knowledge (PR to main)
+```bash
+# Pull latest team knowledge (one command)
+git submodule update --remote
 ```
 
-- **Never push personal context to `main`** — keep it on your personal branch
-- **Shared knowledge updates** go through PRs so the team can review
-- **Rebase your personal branch** on main regularly to pick up team updates
+When someone on the team PRs an update to the shared repo (new workflow, updated prompts, etc.), every team member gets it with that one command.
 
 ---
 
 ## Team Onboarding Checklist
 
-- [ ] Clone the repository
-- [ ] Run `python3 setup.py` and answer the questions
+- [ ] Clone: `git clone --recurse-submodules https://github.com/botz-pillar/infosec-personal-os.git ~/infosec-os`
+- [ ] Run: `cd ~/infosec-os && python3 setup.py`
 - [ ] Review your generated `CLAUDE.md` — edit anything that's off
-- [ ] Create your personal branch: `git checkout -b personal/YOUR-NAME`
-- [ ] Commit your personal context to your branch
-- [ ] Test with Claude Code: run `claude` and ask it to summarize your role
-- [ ] Try a workflow: load `workflows/cloud-security-scan.md` and run through it
+- [ ] Test: run `claude` and ask it to summarize your role
+- [ ] Try a workflow: ask Claude to load `shared-context/workflows/cloud-security-scan.md`
 - [ ] Read `docs/collaboration-guide.md` for contributing back
 
 ---

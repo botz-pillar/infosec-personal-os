@@ -6,9 +6,8 @@ Asks guided questions about your role, tools, projects, and goals,
 then generates personalized CLAUDE.md and my-context.md files.
 """
 
-import os
 import sys
-import textwrap
+import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -134,6 +133,25 @@ def main():
     print(f"\n{C.DIM}Takes about 10 minutes. Be specific — the better your answers,")
     print(f"the more useful Claude will be.{C.RESET}\n")
 
+    # Initialize shared context submodule if not already present
+    shared_path = SCRIPT_DIR / "shared-context"
+    if not (shared_path / "team-overview.md").exists():
+        print(f"{C.CYAN}Initializing shared team context...{C.RESET}")
+        try:
+            subprocess.run(
+                ["git", "submodule", "update", "--init", "--recursive"],
+                cwd=str(SCRIPT_DIR), check=True, capture_output=True
+            )
+            if (shared_path / "team-overview.md").exists():
+                print(f"  {C.GREEN}+{C.RESET} Shared context loaded successfully")
+            else:
+                print(f"  {C.YELLOW}!{C.RESET} Shared context submodule initialized but appears empty.")
+                print(f"    Run: git submodule update --init --recursive")
+        except subprocess.CalledProcessError:
+            print(f"  {C.YELLOW}!{C.RESET} Could not initialize shared context submodule.")
+            print(f"    Run manually: git submodule update --init --recursive")
+        print()
+
     input(f"Press {C.BOLD}Enter{C.RESET} to begin...")
 
     data = {}
@@ -257,15 +275,13 @@ def main():
      {C.DIM}cat CLAUDE.md{C.RESET}
      {C.DIM}cat my-context.md{C.RESET}
 
-  2. Create your personal branch:
-     {C.DIM}git checkout -b personal/{data['name'].lower().replace(' ', '-')}{C.RESET}
-     {C.DIM}git add CLAUDE.md my-context.md{C.RESET}
-     {C.DIM}git commit -m "Add personal context for {data['name']}"{C.RESET}
-
-  3. Start using Claude Code:
+  2. Start using Claude Code:
      {C.DIM}claude{C.RESET}
 
-  4. Test it: Ask Claude "Summarize my role and current priorities"
+  3. Test it: Ask Claude "Summarize my role and current priorities"
+
+  4. Update shared context anytime:
+     {C.DIM}git submodule update --remote{C.RESET}
 
 {C.DIM}Edit CLAUDE.md and my-context.md anytime to refine your context.{C.RESET}
 """)
@@ -379,11 +395,11 @@ def generate_claude_md(d):
 ### Workflows (load when doing the work)
 | Workflow | When to Use |
 |----------|-------------|
-| `workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
-| `workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
-| `workflows/compliance-reporting.md` | Generating compliance reports or evidence |
-| `workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
-| `workflows/risk-assessment.md` | Conducting risk assessments |
+| `shared-context/workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
+| `shared-context/workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
+| `shared-context/workflows/compliance-reporting.md` | Generating compliance reports or evidence |
+| `shared-context/workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
+| `shared-context/workflows/risk-assessment.md` | Conducting risk assessments |
 
 ---
 

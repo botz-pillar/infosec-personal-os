@@ -19,11 +19,18 @@ Before you start, make sure you have:
 
 ## Step-by-Step Setup
 
-### Step 1: Clone the Repository
+### Step 1: Clone the Repository (with shared context)
 
 ```bash
-git clone https://github.com/your-org/infosec-personal-os.git
-cd infosec-personal-os
+git clone --recurse-submodules https://github.com/botz-pillar/infosec-personal-os.git ~/infosec-os
+cd ~/infosec-os
+```
+
+The `--recurse-submodules` flag automatically pulls the shared team context into `shared-context/`.
+
+If you already cloned without that flag:
+```bash
+git submodule update --init --recursive
 ```
 
 ### Step 2: Run the Setup Script
@@ -31,6 +38,8 @@ cd infosec-personal-os
 ```bash
 python3 setup.py
 ```
+
+The script auto-initializes the shared context submodule if needed, then starts the questionnaire.
 
 The script will ask you a series of questions about:
 
@@ -61,17 +70,7 @@ After the script runs, check these files:
    - Review skills, projects, and learning goals
    - This is the deep context — update it as things change
 
-### Step 4: Create Your Personal Branch
-
-```bash
-git checkout -b personal/your-name
-git add CLAUDE.md my-context.md
-git commit -m "Add personal context for [your name]"
-```
-
-Your personal context stays on your branch. Shared context stays on `main`.
-
-### Step 5: Test It
+### Step 4: Test It
 
 ```bash
 claude
@@ -80,18 +79,14 @@ claude
 Try these test prompts:
 - *"Summarize my role and current priorities"* — Claude should know who you are
 - *"What tools do I use?"* — Should match your setup answers
-- *"Load workflows/soc-ticket-triage.md and help me triage an alert"* — Should load the workflow
+- *"Load shared-context/workflows/soc-ticket-triage.md and help me triage an alert"* — Should load the workflow
 
-### Step 6: Set Up Regular Updates
+### Step 5: Keep Shared Context Updated
 
-Your personal branch will fall behind `main` as the team adds shared knowledge. Keep it current:
+When the team updates shared knowledge, pull the latest:
 
 ```bash
-# Pull latest shared context
-git checkout main
-git pull origin main
-git checkout personal/your-name
-git rebase main
+git submodule update --remote
 ```
 
 Do this weekly or whenever you're notified of shared context updates.
@@ -117,11 +112,10 @@ Do this weekly or whenever you're notified of shared context updates.
 - Re-run `python3 setup.py` (it will overwrite your files — back up first if you've made manual edits)
 - Or just edit `CLAUDE.md` and `my-context.md` directly — they're just markdown
 
-### "Merge conflicts on rebase"
+### "Shared context is empty"
 
-- Conflicts only happen if you edited shared files (you shouldn't need to)
-- If they do happen: keep your personal file changes, accept incoming changes for shared files
-- When in doubt: `git checkout --theirs shared-context/` to accept team updates
+- Run `git submodule update --init --recursive`
+- If that doesn't work, check your internet connection and access to the shared repo
 
 ### "Claude is loading too much context"
 

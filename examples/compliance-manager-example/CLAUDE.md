@@ -96,10 +96,10 @@
 ### Workflows (load when doing the work)
 | Workflow | When to Use |
 |----------|-------------|
-| `workflows/compliance-reporting.md` | Generating compliance reports or evidence |
-| `workflows/risk-assessment.md` | Conducting risk assessments |
-| `workflows/vulnerability-analysis.md` | Reviewing vuln data for ConMon |
-| `workflows/cloud-security-scan.md` | Reviewing scan results for evidence |
+| `shared-context/workflows/compliance-reporting.md` | Generating compliance reports or evidence |
+| `shared-context/workflows/risk-assessment.md` | Conducting risk assessments |
+| `shared-context/workflows/vulnerability-analysis.md` | Reviewing vuln data for ConMon |
+| `shared-context/workflows/cloud-security-scan.md` | Reviewing scan results for evidence |
 
 ---
 

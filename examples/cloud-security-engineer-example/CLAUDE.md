@@ -94,10 +94,10 @@
 ### Workflows (load when doing the work)
 | Workflow | When to Use |
 |----------|-------------|
-| `workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
-| `workflows/compliance-reporting.md` | FedRAMP ConMon deliverables |
-| `workflows/risk-assessment.md` | Cloud architecture risk assessments |
-| `workflows/vulnerability-analysis.md` | Triaging cloud vulnerability findings |
+| `shared-context/workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
+| `shared-context/workflows/compliance-reporting.md` | FedRAMP ConMon deliverables |
+| `shared-context/workflows/risk-assessment.md` | Cloud architecture risk assessments |
+| `shared-context/workflows/vulnerability-analysis.md` | Triaging cloud vulnerability findings |
 
 ---
 

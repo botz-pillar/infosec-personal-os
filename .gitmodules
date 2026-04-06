@@ -1,0 +1,3 @@
+[submodule "shared-context"]
+	path = shared-context
+	url = https://github.com/botz-pillar/infosec-shared-context.git

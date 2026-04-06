@@ -71,11 +71,11 @@
 ### Workflows (load when doing the work)
 | Workflow | When to Use |
 |----------|-------------|
-| `workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
-| `workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
-| `workflows/compliance-reporting.md` | Generating compliance reports or evidence |
-| `workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
-| `workflows/risk-assessment.md` | Conducting risk assessments |
+| `shared-context/workflows/cloud-security-scan.md` | Running or reviewing cloud security scans |
+| `shared-context/workflows/vulnerability-analysis.md` | Triaging or analyzing vulnerabilities |
+| `shared-context/workflows/compliance-reporting.md` | Generating compliance reports or evidence |
+| `shared-context/workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
+| `shared-context/workflows/risk-assessment.md` | Conducting risk assessments |
 
 ---
 

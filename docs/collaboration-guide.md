@@ -4,17 +4,16 @@
 
 ---
 
-## How Shared vs. Personal Content Works
+## How the Two-Repo System Works
 
-| Content Type | Location | Branch | Who Updates |
-|-------------|----------|--------|-------------|
-| Your personal context | `CLAUDE.md`, `my-context.md` | `personal/your-name` | You alone |
-| Shared team knowledge | `shared-context/*` | `main` | Anyone via PR |
-| Workflows | `workflows/*` | `main` | Anyone via PR |
-| Examples | `examples/*` | `main` | Anyone via PR |
-| Documentation | `docs/*` | `main` | Anyone via PR |
+| Content | Repo | Who Updates |
+|---------|------|-------------|
+| Your personal context (`CLAUDE.md`, `my-context.md`) | Your copy of `infosec-personal-os` | You alone |
+| Shared team knowledge, workflows, prompts | [`infosec-shared-context`](https://github.com/botz-pillar/infosec-shared-context) | Team via PRs |
+| Examples and documentation | `infosec-personal-os` (template repo) | Repo maintainer |
 
-**Rule:** Your personal files stay on your branch. Everything else goes through PRs to `main`.
+**Your personal files** live in your local copy of infosec-personal-os (gitignored from the template).
+**Shared knowledge** lives in a separate repo and is pulled in via git submodule at `shared-context/`.
 
 ---
 
@@ -31,34 +30,37 @@ You should open a PR when you:
 
 ### How to Contribute
 
-1. **Create a feature branch from main:**
+Contributions go to the **shared context repo**, not your personal OS.
+
+1. **Clone the shared context repo directly:**
 ```bash
-git checkout main
-git pull origin main
-git checkout -b feature/add-kubernetes-workflow
+git clone https://github.com/botz-pillar/infosec-shared-context.git
+cd infosec-shared-context
 ```
 
-2. **Make your changes:**
-   - Add new files or edit existing shared files
-   - Follow existing formatting and structure
-   - Include enough context for someone unfamiliar with the topic
+2. **Create a branch and make changes:**
+```bash
+git checkout -b add-kubernetes-workflow
+# Add or edit files
+```
 
 3. **Commit and push:**
 ```bash
-git add shared-context/new-file.md  # or whatever you changed
+git add workflows/kubernetes-security.md
 git commit -m "Add Kubernetes security scanning workflow"
-git push -u origin feature/add-kubernetes-workflow
+git push -u origin add-kubernetes-workflow
 ```
 
-4. **Open a pull request:**
+4. **Open a pull request** on the shared context repo:
    - Title: Clear description of what's being added/changed
    - Body: Why this is useful, who it helps, any context needed
    - Reviewers: Tag at least one team member
 
-5. **After merge, update your personal branch:**
+5. **After merge, everyone pulls the update:**
 ```bash
-git checkout personal/your-name
-git rebase main
+# In your personal OS directory
+cd ~/infosec-os
+git submodule update --remote
 ```
 
 ---
@@ -123,27 +125,25 @@ When reviewing PRs to shared content:
 
 ---
 
-## Keeping Your Branch Current
+## Keeping Shared Context Current
 
-Your personal branch (`personal/your-name`) will diverge from `main` as the team adds content. Stay current:
+Shared context is a git submodule. Updating is one command:
 
 ### Weekly Sync (Recommended)
 
 ```bash
-git checkout main
-git pull origin main
-git checkout personal/your-name
-git rebase main
+cd ~/infosec-os
+git submodule update --remote
 ```
 
-### Handling Conflicts
+That's it. Your personal files are untouched — only shared context updates.
 
-Conflicts should be rare (you're editing personal files, team edits shared files). If they happen:
+### What Happens When You Update
 
-1. Read the conflict carefully
-2. For shared files: Accept the incoming (`main`) version
-3. For your personal files: Keep your version
-4. Test after resolving: `claude` → "Summarize my role"
+- New files the team added appear in `shared-context/`
+- Changed files get the latest version
+- Your `CLAUDE.md` and `my-context.md` are never affected
+- No merge conflicts — submodules update cleanly
 
 ---
 
@@ -161,6 +161,8 @@ Each shared file should have a maintainer:
 | `approved-prompts.md` | All contributors | Ongoing |
 | `security-guardrails.md` | Security Lead | Quarterly + post-incident |
 | `workflows/*` | Original author | Quarterly |
+
+*All of these live in the [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) repo.*
 
 ### Deprecating Content
 
@@ -232,17 +234,17 @@ If you need content that doesn't exist:
 
 ## FAQ
 
-**Q: Can I edit shared files on my personal branch?**
-A: You can, but your edits won't be visible to others until PRed to `main`. If it's useful for everyone, PR it.
+**Q: Can I edit shared context files locally?**
+A: You can for personal experimentation, but changes won't persist — the next `git submodule update --remote` will overwrite them. To make permanent changes, PR them to the shared context repo.
 
 **Q: What if I disagree with a shared context file?**
 A: Open an issue or discuss in Slack. The team decides shared content collaboratively.
 
 **Q: How do I know when shared content has been updated?**
-A: Watch the repo for notifications, or check `git log main -- shared-context/` periodically.
+A: Watch the [infosec-shared-context](https://github.com/botz-pillar/infosec-shared-context) repo for notifications, or run `git submodule update --remote` regularly.
 
 **Q: Can I add my own workflows without PRing them?**
-A: Yes — put them in a `my-workflows/` folder on your personal branch. Only PR if they'd benefit others.
+A: Yes — put them in a `my-workflows/` folder in your personal OS. Only PR to shared context if they'd benefit others.
 
-**Q: What if I accidentally push personal context to main?**
-A: Ask the security lead to help revert. If it contained credentials, rotate them immediately.
+**Q: What if I accidentally commit credentials?**
+A: Rotate them immediately, then force-push to remove from history (or ask the security lead for help).
