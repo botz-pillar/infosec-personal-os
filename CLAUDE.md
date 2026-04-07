@@ -126,8 +126,22 @@ If `my-context.md` exists, this user is already set up. Load their context and w
 - `shared-context/team-overview.md` — Team structure and responsibilities
 - `shared-context/compliance-frameworks.md` — FedRAMP, CMMC, CIS, NIST references
 - `shared-context/tools-and-integrations.md` — Tool inventory and integration docs
-- `shared-context/approved-prompts.md` — Vetted prompts for common tasks
 - `shared-context/security-guardrails.md` — Security constraints and rules
+
+**Prompt libraries (load the one matching your role):**
+| Library | Role |
+|---------|------|
+| `shared-context/prompts/soc-analyst-prompts.md` | SOC analysts |
+| `shared-context/prompts/cloud-engineer-prompts.md` | Cloud security engineers |
+| `shared-context/prompts/compliance-prompts.md` | Compliance managers |
+| `shared-context/prompts/incident-response-prompts.md` | Incident responders |
+| `shared-context/prompts/risk-grc-prompts.md` | Risk and GRC analysts |
+
+**Tool integrations (load when connecting Claude to a tool):**
+- `shared-context/integrations/README.md` — Overview of all integrations
+- `shared-context/integrations/aws-cli-integration.md` — AWS CLI security queries
+- `shared-context/integrations/github-mcp-setup.md` — GitHub MCP native integration
+- `shared-context/integrations/terraform-integration.md` — IaC scanning with Checkov/tfsec
 
 **Workflows (load when doing the work):**
 | Workflow | When to Use |
@@ -137,6 +151,10 @@ If `my-context.md` exists, this user is already set up. Load their context and w
 | `shared-context/workflows/compliance-reporting.md` | Generating compliance reports or evidence |
 | `shared-context/workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
 | `shared-context/workflows/risk-assessment.md` | Conducting risk assessments |
+
+**Personal prompts:**
+- `my-prompts/favorites.md` — Your proven personal prompts
+- `my-prompts/working-prompts.md` — Prompt experiments in progress
 
 ### Guardrails
 
