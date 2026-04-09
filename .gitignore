@@ -1,6 +1,7 @@
 # Personal context files (generated during setup, stay local)
 /my-context.md
-my-context/
+my-context/*
+!my-context/README.md
 my-workflows/
 
 # Backup files from setup script

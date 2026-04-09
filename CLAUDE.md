@@ -165,6 +165,19 @@ If `my-context.md` exists, this user is already set up. Load their context and w
 - `my-prompts/favorites.md` — Your proven personal prompts
 - `my-prompts/working-prompts.md` — Prompt experiments in progress
 
+### Slash Commands
+
+Type any of these to activate a workflow:
+
+| Command | What It Does |
+|---------|-------------|
+| `/plan` | Plan a work session, project, or deliverable |
+| `/draft` | Draft an email, report, proposal, or document |
+| `/research` | Deep research on any topic with structured output |
+| `/review` | Review your work before submitting or sending |
+| `/verify` | Check that your ContextOS setup is healthy |
+| `/whats-new` | See what changed in shared team context |
+
 ### Guardrails
 
 - Don't make security decisions — surface options and risks, the user decides

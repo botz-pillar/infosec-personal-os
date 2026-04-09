@@ -92,6 +92,34 @@ After setup, Claude knows who you are, what you work on, and how to help. Every 
 
 ---
 
+## Try These First
+
+After setup, try these to see ContextOS in action:
+
+```
+# Verify everything is wired up correctly
+/verify
+
+# Plan your work session — Claude knows your projects and priorities
+/plan
+
+# Draft an email, report, or document — adapted to your audience
+/draft
+
+# Research a topic — structured brief with recommendations
+/research
+
+# Review your work before you send or submit it
+/review
+```
+
+Or try a natural prompt:
+- *"Summarize my role and current priorities"* — confirms Claude knows who you are
+- *"What workflows are available in shared-context?"* — discover what your team has built
+- *"Help me prepare for my meeting with [stakeholder] about [topic]"* — uses your project context
+
+---
+
 ## What Gets Generated
 
 After setup, your directory looks like this:
@@ -112,6 +140,18 @@ After setup, your directory looks like this:
 │       ├── compliance-reporting.md
 │       ├── soc-ticket-triage.md
 │       └── risk-assessment.md
+├── .claude/commands/                   # Slash commands (type /plan, /draft, etc.)
+│   ├── plan.md                        #   Plan a session, project, or deliverable
+│   ├── draft.md                       #   Draft emails, reports, documents
+│   ├── research.md                    #   Structured research on any topic
+│   ├── review.md                      #   Review work before sending
+│   ├── verify.md                      #   Setup health check
+│   └── whats-new.md                   #   Check for shared context updates
+├── my-prompts/                        # Your personal prompt workshop
+│   ├── favorites.md                   #   Battle-tested prompts (pre-populated)
+│   ├── working-prompts.md             #   Experiments in progress
+│   └── contributions/                 #   Ready to PR to the team
+├── my-context/                        # Extended personal context (gitignored)
 ├── examples/                          # Sample completed setups
 │   ├── soc-analyst-example/
 │   ├── cloud-security-engineer-example/

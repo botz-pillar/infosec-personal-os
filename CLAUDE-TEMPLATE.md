@@ -47,6 +47,19 @@
 ### What I Need From Claude
 {{CLAUDE_EXPECTATIONS}}
 
+### Slash Commands
+
+Type any of these to activate a workflow:
+
+| Command | What It Does |
+|---------|-------------|
+| `/plan` | Plan a work session, project, or deliverable |
+| `/draft` | Draft an email, report, proposal, or document |
+| `/research` | Deep research on any topic with structured output |
+| `/review` | Review your work before submitting or sending |
+| `/verify` | Check that your ContextOS setup is healthy |
+| `/whats-new` | See what changed in shared team context |
+
 ### What I Don't Want
 - Don't make security decisions for me — surface options and risks, I decide
 - Don't hallucinate tool outputs or scan results — if you can't run it, say so
