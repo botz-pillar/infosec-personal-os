@@ -105,9 +105,13 @@ After generating both files, tell the user:
 > - `my-context.md` — your detailed personal context
 > - Updated `CLAUDE.md` — your personalized AI router (this file)
 >
+> Your workspace also includes:
+> - `shared-context/` — pre-loaded security frameworks, prompts, and workflows
+> - `lab-data/` — training data for AI Cloud Security Lab courses (CloudVault Financial scenario)
+>
 > From now on, every time you run `claude` in this directory, I'll know who you are and how to help.
 >
-> To update shared team context anytime: `git submodule update --remote`
+> To pull the latest shared content and lab data: `git submodule update --remote`
 >
 > Try asking me something about your work to see it in action!
 
@@ -151,6 +155,11 @@ If `my-context.md` exists, this user is already set up. Load their context and w
 | `shared-context/workflows/compliance-reporting.md` | Generating compliance reports or evidence |
 | `shared-context/workflows/soc-ticket-triage.md` | Triaging SOC alerts or tickets |
 | `shared-context/workflows/risk-assessment.md` | Conducting risk assessments |
+
+**Lab data (AI Cloud Security Lab courses):**
+- `lab-data/cloudvault-financial/company-profile.md` — CloudVault Financial client briefing (read before any lab work)
+- `lab-data/cloudvault-financial/cloudtrail-week1.json` — CloudTrail logs for analysis exercises
+- Additional datasets added as courses release — run `git submodule update --remote lab-data` to pull the latest
 
 **Personal prompts:**
 - `my-prompts/favorites.md` — Your proven personal prompts

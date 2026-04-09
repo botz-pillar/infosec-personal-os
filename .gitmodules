@@ -1,3 +1,6 @@
 [submodule "shared-context"]
 	path = shared-context
 	url = https://github.com/botz-pillar/contextOS-team.git
+[submodule "lab-data"]
+	path = lab-data
+	url = https://github.com/botz-pillar/ai-csl-data.git

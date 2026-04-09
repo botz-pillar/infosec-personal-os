@@ -88,6 +88,8 @@ After setup, Claude knows who you are, what you work on, and how to help. Every 
 
 **To update shared team context anytime:** `git submodule update --remote`
 
+> **Alternative:** If you prefer a structured terminal questionnaire instead of a conversation with Claude, run `python3 setup.py`. It generates the same files.
+
 ---
 
 ## What Gets Generated
