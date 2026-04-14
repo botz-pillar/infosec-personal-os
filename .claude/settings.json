@@ -7,5 +7,18 @@
       "Bash(mv shared-context/*)",
       "Bash(cp * shared-context/*)"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/check-first-run.sh"
+          }
+        ]
+      }
+    ]
   }
 }

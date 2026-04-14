@@ -1,101 +1,118 @@
 # Setup Guide
 
-> Detailed walkthrough for setting up your ContextOS.
+> Detailed walkthrough for setting up your ContextOS Personal.
+
+**Last Updated:** 2026-04-14
 
 ---
 
 ## Prerequisites
 
-Before you start, make sure you have:
-
 1. **Git** installed (`git --version`)
 2. **Claude Code** installed and authenticated
    - Install: `npm install -g @anthropic-ai/claude-code` (or via Homebrew)
-   - Authenticate: Run `claude` and follow the login prompts
-3. **Access to the team repository** (clone permissions)
+   - Authenticate: run `claude` and follow the login prompts
+3. **Access to your team repo** (if you're joining a team; optional for solo users)
 
 ---
 
-## Step-by-Step Setup
+## Step 1: Clone
 
-### Step 1: Clone the Repository (with shared context)
-
+### With a team (includes shared-context submodule)
 ```bash
-git clone --recurse-submodules https://github.com/YOUR-ORG/contextOS-personal.git ~/context-os
+git clone --recurse-submodules https://github.com/botz-pillar/contextOS-personal.git ~/context-os
 cd ~/context-os
 ```
 
-The `--recurse-submodules` flag automatically pulls the shared team context into `shared-context/`.
+### Solo (no team)
+```bash
+git clone https://github.com/botz-pillar/contextOS-personal.git ~/context-os
+cd ~/context-os
+```
 
-If you already cloned without that flag:
+### Already cloned without `--recurse-submodules`?
 ```bash
 git submodule update --init --recursive
 ```
 
-### Step 2: Launch Claude Code
+If you don't want a team submodule at all, just ignore it — ContextOS Personal works without it.
+
+---
+
+## Step 2: Launch Claude Code
 
 ```bash
 claude
 ```
 
-Claude detects that this is your first time (no `my-context.md` exists yet) and automatically starts the onboarding flow. It will ask you questions in sections:
+A SessionStart hook (`.claude/hooks/check-first-run.sh`) detects that you haven't onboarded yet (no `my-context.md` exists). It injects a message telling Claude to walk you through setup.
 
-| Section | What Claude Asks | Time |
-|---------|-----------------|------|
-| Identity | Name, email, title, team, manager | 1 min |
-| Role & Responsibilities | What you actually do day-to-day, priorities, focus areas | 2 min |
-| Tools & Systems | What you use, access levels, proficiency | 2 min |
-| Current Projects | Active work, upcoming, recently completed | 2 min |
-| Skills & Learning | Strengths, growth areas, certs, goals | 2 min |
-| Working Style | Preferences, what you want/don't want from Claude | 1 min |
+Claude greets you and runs a 7-step flow:
+
+| Step | Covers | Time |
+|------|--------|------|
+| 1 | Domain & identity (name, title, team, manager) | 1 min |
+| 2 | Role & responsibilities (what you actually do) | 2 min |
+| 3 | Tools & systems (daily tools, access, MCP servers) | 2 min |
+| 4 | Current projects (active, upcoming, recently completed) | 2 min |
+| 5 | Skills & learning (strengths, growth, certs) | 2 min |
+| 6 | Working style (preferences, dos/don'ts) | 1 min |
+| 7 | File generation | — |
 
 **Tips for answering:**
-- Be specific — "Splunk SPL queries for alert triage" is better than "SIEM"
-- Think about your actual day, not your job description
-- Include tools you're learning, not just tools you know
-- Tell Claude what frustrates you — it'll shape how it helps
+- Be specific. "SPL queries for alert triage in Splunk" beats "SIEM."
+- Describe your real day, not your job description.
+- Include tools you're learning, not just tools you know.
+- Tell Claude what frustrates you — it shapes how Claude helps.
 
-### Step 3: Review Generated Files
+---
 
-After the conversation, Claude generates two files:
+## Step 3: Review Generated Files
 
-1. **`CLAUDE.md`** (updated) — Your personalized AI context
-   - This replaces the onboarding router with your personal context
-   - Read it through. Does it sound like you?
-   - Edit anything that's off or add missing details
+After the conversation, Claude generates:
 
-2. **`my-context.md`** (new) — Your detailed personal context
-   - Review skills, projects, and learning goals
-   - Update as things change
+**`CLAUDE.md`** — your personalized AI router (replaces the template version). Short; routes Claude based on what you're working on.
 
-### Step 4: Test It
+**`my-context.md`** — your detailed context. Skills, projects, preferences, learning goals. Edit as your role evolves.
 
-Try these prompts:
-- *"Summarize my role and current priorities"* — Claude should know who you are
-- *"What tools do I use?"* — Should match your setup answers
-- *"Load shared-context/workflows/soc-ticket-triage.md and help me triage an alert"* — Should load the workflow
+Read them through. Edit anything that's off.
 
-### Step 5: Keep Shared Context Updated
+---
 
-When the team updates shared knowledge, pull the latest:
+## Step 4: Test It
+
+Try:
+- *"Summarize my role and current priorities"* — should confirm Claude knows you
+- *"What tools do I use?"* — should match your setup answers
+- `/verify` — runs the setup health check
+
+If something's wrong, edit the files directly or delete `my-context.md` and re-run `claude` to restart onboarding.
+
+---
+
+## Step 5: Keep Shared Context Updated (if you're on a team)
 
 ```bash
 git submodule update --remote
 ```
 
-Do this weekly or whenever you're notified of shared context updates.
+Do this weekly, or when the team notifies you of updates.
 
 ---
 
-## Alternative: Script-Based Setup
+## Alternative: Non-Interactive Setup (legacy)
 
-If you prefer a non-interactive setup, you can also run:
+`setup.py` is a terminal questionnaire that ships with the repo. **Status as of v2: legacy fallback.** It still generates working files, but the output shape reflects the v1 template structure, which diverges slightly from v2. The primary path (SessionStart hook + `skills/onboarding.md`) is kept up to date with the templates.
+
+Use `setup.py` only if:
+- You can't run the interactive flow (e.g., CI / scripting)
+- Claude Code isn't available in your environment
 
 ```bash
 python3 setup.py
 ```
 
-This runs a guided questionnaire in the terminal and generates the same files. Use this if you want a faster, more structured setup experience.
+After running, compare the generated files against [CLAUDE-TEMPLATE.md](../CLAUDE-TEMPLATE.md) and [personal-context-template.md](../personal-context-template.md) and update as needed.
 
 ---
 
@@ -103,44 +120,50 @@ This runs a guided questionnaire in the terminal and generates the same files. U
 
 ### "Claude doesn't seem to know who I am"
 
-- Make sure `CLAUDE.md` is in the root of your working directory
-- Make sure you're running `claude` from inside your `context-os/` directory
-- Check that `my-context.md` exists (if not, Claude will re-run setup)
+- Confirm `CLAUDE.md` is in the repo root.
+- Confirm you're running `claude` from inside the repo.
+- Check `my-context.md` exists. If not, the hook will restart onboarding.
 
-### "Claude is trying to run setup again"
+### "Claude keeps trying to run setup"
 
-- Claude triggers setup when `my-context.md` doesn't exist
-- If you've already set up, make sure `my-context.md` is in the root directory
-- If it was accidentally deleted, re-run setup or recreate it manually
+The hook triggers onboarding whenever `my-context.md` doesn't exist. If you already set up, make sure the file wasn't deleted.
 
 ### "Shared context is empty"
 
-- Run `git submodule update --init --recursive`
-- If that doesn't work, check your internet connection and access to the shared repo
+```bash
+git submodule update --init --recursive
+```
+
+If that fails, check your access to the team repo and your internet connection.
 
 ### "I want to change my answers"
 
-- Edit `CLAUDE.md` and `my-context.md` directly — they're just markdown
-- Or delete `my-context.md` and run `claude` again to re-trigger setup
+- Edit `CLAUDE.md` and `my-context.md` directly — they're just markdown.
+- Or delete `my-context.md` and run `claude` again to re-trigger setup.
 
-### "Claude is loading too much context"
+### "CLAUDE.md is too long / loading too much"
 
-- `CLAUDE.md` loads automatically — keep it concise
-- Workflows load on demand — only reference the one you're using
-- If `CLAUDE.md` is too long, move details to `my-context.md` and reference it
+- Keep `CLAUDE.md` on one screen. Move details to `my-context.md`.
+- Workflows load on demand — don't load them all upfront.
+
+### "The hook isn't firing"
+
+- Confirm `.claude/hooks/check-first-run.sh` is executable: `chmod +x .claude/hooks/check-first-run.sh`
+- Confirm `.claude/settings.json` references the hook correctly.
+- Run the script manually to check output: `.claude/hooks/check-first-run.sh`
 
 ---
 
 ## What's Next
 
-After setup, read:
-- [Customization Guide](customization-guide.md) — Make it truly yours
-- [Collaboration Guide](collaboration-guide.md) — Contribute back to the team
+- [Customization Guide](customization-guide.md) — tune it to how you actually work
+- [Collaboration Guide](collaboration-guide.md) — contribute back to the team
+- [Common Mistakes](common-mistakes.md) — seven traps to avoid
 
 ---
 
 ## Getting Help
 
-- Ask in the team Slack channel
-- Open an issue on the repository
-- Ask Claude: *"Help me customize my ContextOS setup"*
+- Ask in your team's chat channel
+- Open an issue on the contextOS-personal repo
+- Ask Claude directly: *"Help me customize my ContextOS setup"*

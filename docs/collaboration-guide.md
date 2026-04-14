@@ -1,250 +1,206 @@
 # Collaboration Guide
 
-> How to contribute shared knowledge back to the team and keep the system current.
+> How to contribute to shared team knowledge and keep the system current.
+
+**Last Updated:** 2026-04-14
 
 ---
 
-## How the Two-Repo System Works
+## The Two-Repo Model
 
-| Content | Repo | Who Updates |
-|---------|------|-------------|
-| Your personal context (`CLAUDE.md`, `my-context.md`) | Your copy of `contextOS-personal` | You alone |
-| Shared team knowledge, workflows, prompts | [`contextOS-team`](https://github.com/botz-pillar/contextOS-team) | Team via PRs |
-| Examples and documentation | `contextOS-personal` (template repo) | Repo maintainer |
+| Content | Lives In | Who Updates |
+|---------|----------|-------------|
+| Your personal context (`CLAUDE.md`, `my-context.md`, `my-prompts/`) | Your fork of `contextOS-personal` | You alone |
+| Shared team knowledge (workflows, prompts, standards) | `contextOS-team` (or your team's equivalent) | Team via PRs |
+| Template itself | `contextOS-personal` upstream | Repo maintainer |
 
-**Your personal files** live in your local copy of contextOS-personal (gitignored from the template).
-**Shared knowledge** lives in a separate repo and is pulled in via git submodule at `shared-context/`.
+**Personal files are yours.** **Shared files are team property.** The boundary is enforced by `.claude/settings.json` — Claude can't write to `shared-context/`.
 
 ---
 
-## Contributing to Shared Knowledge
+## When to Contribute to Shared Context
 
-### When to Contribute
-
-You should open a PR when you:
+Open a PR to the team repo when you:
 - Discover a tool, technique, or process the team would benefit from
 - Write a workflow for a task others also perform
-- Find an error or outdated info in shared context
+- Find an error or outdated info in shared content
 - Create a prompt that produces consistently good results
-- Learn something from an incident that should be documented
+- Learn something from an incident or project that should be documented
 
-### How to Contribute
-
-Contributions go to the **shared context repo**, not your personal OS.
-
-1. **Clone the shared context repo directly:**
-```bash
-git clone https://github.com/botz-pillar/contextOS-team.git
-cd contextOS-team
-```
-
-2. **Create a branch and make changes:**
-```bash
-git checkout -b add-kubernetes-workflow
-# Add or edit files
-```
-
-3. **Commit and push:**
-```bash
-git add workflows/kubernetes-security.md
-git commit -m "Add Kubernetes security scanning workflow"
-git push -u origin add-kubernetes-workflow
-```
-
-4. **Open a pull request** on the shared context repo:
-   - Title: Clear description of what's being added/changed
-   - Body: Why this is useful, who it helps, any context needed
-   - Reviewers: Tag at least one team member
-
-5. **After merge, everyone pulls the update:**
-```bash
-# In your personal OS directory
-cd ~/infosec-os
-git submodule update --remote
-```
+Keep it in your personal OS when it's:
+- Personal preference (your voice, your focus times)
+- Specific to your role only
+- Experimental or unvetted
+- Private (sensitive clients, internal systems not-yet-documented)
 
 ---
 
-## PR Guidelines
+## Contributing Workflow
 
-### Good PRs
+Contributions go to the **team repo**, not your personal OS.
 
-- **New workflow:** Clear steps, tested in real work, includes example outputs
-- **Tool update:** Accurate information, links to docs, access instructions
-- **Prompt addition:** Tested prompt with consistent results, clear placeholders
-- **Framework update:** Verified against official documentation, dated
-- **Bug fix:** Specific correction with source/reference
+1. **Clone the team repo directly:**
+   ```bash
+   git clone https://github.com/YOUR-ORG/contextOS-team.git
+   cd contextOS-team
+   ```
 
-### PR Template
+2. **Branch:**
+   ```bash
+   git checkout -b add-onboarding-checklist
+   ```
+
+3. **Make changes, commit:**
+   ```bash
+   git add workflows/onboarding-checklist.md
+   git commit -m "Add onboarding checklist workflow"
+   git push -u origin add-onboarding-checklist
+   ```
+
+4. **Open a PR:**
+   - Title: clear description of what's being added
+   - Body: why this is useful, who it helps, how you tested it
+   - Reviewers: tag at least one team member (two for major changes)
+
+5. **After merge, everyone pulls:**
+   ```bash
+   cd ~/context-os
+   git submodule update --remote
+   ```
+
+---
+
+## PR Template
 
 ```markdown
 ## What Changed
-[Brief description of the change]
+[Brief description]
 
 ## Why
-[Why this is useful for the team]
+[Why this helps the team]
 
 ## How I Tested This
-[How you verified accuracy — used it in real work, checked against official docs, etc.]
+[Used it in real work / verified against official docs / ran through with teammate X]
 
 ## Checklist
 - [ ] Follows existing file format and structure
-- [ ] No personal information or credentials included
+- [ ] No personal information or credentials
 - [ ] Accurate and verified against authoritative sources
-- [ ] Would be useful to at least one other team member
+- [ ] Would help at least one other team member
 ```
 
-### What NOT to Put in PRs
+---
+
+## What NOT to PR
 
 - Personal context or preferences
-- Credentials, API keys, or sensitive data
-- Unverified information or speculative content
-- Company-specific details that shouldn't be in a shared repo
+- Credentials, API keys, sensitive data
+- Unverified or speculative content
+- Company-specific details that shouldn't be team-visible
 - Draft content that isn't ready for team use
 
 ---
 
 ## Review Process
 
-### As a Reviewer
+As a reviewer, check:
 
-When reviewing PRs to shared content:
+1. **Accuracy** — verify against official sources
+2. **Usefulness** — would this help you or a teammate?
+3. **Consistency** — does it follow existing format?
+4. **Security** — any sensitive info that shouldn't be in a shared repo?
+5. **Completeness** — enough context for someone to use it without asking questions?
 
-1. **Accuracy:** Is the information correct? Check against official sources.
-2. **Usefulness:** Would this help you or someone on the team?
-3. **Consistency:** Does it follow the existing format and structure?
-4. **Security:** Does it contain any sensitive information?
-5. **Completeness:** Is there enough context for someone to use this?
-
-### Review SLA
-
-- Aim to review PRs within 2 business days
-- Simple additions/fixes: 1 reviewer sufficient
-- New workflows or major changes: 2 reviewers recommended
-- Security guardrail changes: Requires security lead approval
+**Review SLA (suggested):**
+- Simple additions/fixes: 1 reviewer, 1–2 business days
+- New workflows or major changes: 2 reviewers, 2–3 days
+- Anything touching guardrails/security rules: requires the owner's approval
 
 ---
 
 ## Keeping Shared Context Current
 
-Shared context is a git submodule. Updating is one command:
-
-### Weekly Sync (Recommended)
-
 ```bash
-cd ~/infosec-os
 git submodule update --remote
 ```
 
-That's it. Your personal files are untouched — only shared context updates.
+Weekly cadence works well. When the team announces a meaningful update, pull immediately.
 
-### What Happens When You Update
-
-- New files the team added appear in `shared-context/`
-- Changed files get the latest version
-- Your `CLAUDE.md` and `my-context.md` are never affected
-- No merge conflicts — submodules update cleanly
+**What happens:** new files appear; changed files get the latest version; your personal files are untouched; no merge conflicts on submodule pulls.
 
 ---
 
-## Content Maintenance
+## Content Ownership
 
-### Shared Content Owners
-
-Each shared file should have a maintainer:
+Each shared file should have a maintainer. Suggested structure (adapt to your team):
 
 | File | Maintainer | Review Cadence |
 |------|-----------|----------------|
-| `team-overview.md` | Security Lead | Quarterly |
-| `compliance-frameworks.md` | Compliance Manager | Quarterly + framework updates |
-| `tools-and-integrations.md` | Rotates | Monthly |
+| `team-overview.md` | Team Lead | Quarterly |
+| `tools-and-integrations.md` | Rotating | Monthly |
 | `approved-prompts.md` | All contributors | Ongoing |
-| `security-guardrails.md` | Security Lead | Quarterly + post-incident |
+| `security-guardrails.md` (if applicable) | Security Lead | Quarterly + post-incident |
 | `workflows/*` | Original author | Quarterly |
-
-*All of these live in the [contextOS-team](https://github.com/botz-pillar/contextOS-team) repo.*
-
-### Deprecating Content
-
-If something is outdated:
-1. Don't just delete it — open a PR explaining why
-2. If replacing, include the replacement in the same PR
-3. If the information moved elsewhere, add a redirect note
-
-### Version History
-
-Git handles version history. For major changes, include context in commit messages:
-
-```
-Update compliance-frameworks.md for NIST 800-53 Rev 5
-
-- Updated control families to match Rev 5 structure
-- Added SR (Supply Chain Risk Management) family
-- Updated FedRAMP control counts for Rev 5 baselines
-- Source: NIST SP 800-53 Rev 5 (Sept 2020, updated Dec 2024)
-```
 
 ---
 
-## Ideas for Team Contributions
+## Deprecating Content
 
-### Low Effort, High Value
+Don't just delete. Open a PR explaining why. If replacing, include the replacement in the same PR. If the info moved, add a redirect note.
+
+---
+
+## Ideas for Contributions
+
+### Low effort, high value
 - Fix a typo or outdated tool name
 - Add a prompt you use regularly to the approved library
 - Update tool versions or access instructions
-- Add a link to a useful reference
 
-### Medium Effort, High Value
+### Medium effort, high value
 - Write a workflow for a task you do frequently
 - Document a tool integration or MCP server setup
-- Create a checklist for a common process
 - Add a new example setup for a different role
 
-### Higher Effort, Very High Value
+### Higher effort, very high value
 - Build a new shared context file for a topic the team needs
 - Create an onboarding checklist for new team members
-- Document incident response procedures
-- Build automated evidence collection guides
+- Build automated evidence-collection or reporting guides
 
 ---
 
 ## Communication
 
-### Announcing Changes
+**Announcing changes (after merge):**
+- Post in team chat with a brief summary
+- Tag people who'd benefit most
+- Flag anything that requires action (e.g., "rebase your branch")
 
-When your PR is merged:
-- Post in the team Slack channel with a brief summary
-- Tag people who would benefit most
-- Include instructions if anything requires action (e.g., "rebase your branch")
-
-### Requesting Content
-
-If you need content that doesn't exist:
+**Requesting content:**
 - Open a GitHub issue describing what you need and why
 - Tag potential contributors
 - Offer to review if someone else writes it
 
-### Feedback on Existing Content
-
-- Found something inaccurate? Open an issue or PR
-- Have an improvement idea? Open an issue for discussion first if it's a major change
-- Content confusing? Ask in Slack, then PR a clarification
+**Feedback on existing content:**
+- Inaccuracy → issue or PR
+- Improvement idea → issue to discuss first if major
+- Confusing content → ask in chat, then PR clarification
 
 ---
 
 ## FAQ
 
 **Q: Can I edit shared context files locally?**
-A: You can for personal experimentation, but changes won't persist — the next `git submodule update --remote` will overwrite them. To make permanent changes, PR them to the shared context repo.
+A: Read-only by default (`.claude/settings.json` deny rules). You can override for experiments, but changes won't persist — the next `git submodule update --remote` overwrites them. For persistent changes, PR to the team repo.
 
-**Q: What if I disagree with a shared context file?**
-A: Open an issue or discuss in Slack. The team decides shared content collaboratively.
+**Q: What if I disagree with a shared content file?**
+A: Open an issue or discuss in team chat. Shared content is decided collaboratively.
 
-**Q: How do I know when shared content has been updated?**
-A: Watch the [contextOS-team](https://github.com/botz-pillar/contextOS-team) repo for notifications, or run `git submodule update --remote` regularly.
+**Q: How do I know when shared context was updated?**
+A: Watch the team repo for notifications, or run `git submodule update --remote` regularly. The `/whats-new` slash command lists changes since your last pull.
 
 **Q: Can I add my own workflows without PRing them?**
-A: Yes — put them in a `my-workflows/` folder in your personal OS. Only PR to shared context if they'd benefit others.
+A: Yes. Put them in `my-workflows/` (or anywhere in your personal OS). Only PR to shared if others would benefit.
 
 **Q: What if I accidentally commit credentials?**
-A: Rotate them immediately, then force-push to remove from history (or ask the security lead for help).
+A: Rotate them immediately, then force-push to remove from history (or ask your security lead for help).
